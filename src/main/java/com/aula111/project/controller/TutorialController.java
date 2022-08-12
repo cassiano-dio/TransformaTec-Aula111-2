@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aula111.project.model.Tutorial;
@@ -43,6 +44,21 @@ public class TutorialController {
         }
 
         return new ResponseEntity<>(_tutorials, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/tutorials/title")
+    public ResponseEntity<List<Tutorial>> getTutorialsByTitle(@RequestParam(required = true) String title){
+
+        List<Tutorial> tutorials = new ArrayList<Tutorial>();
+
+        repo.findByTitleContaining(title).forEach(tutorials::add);
+
+        if (tutorials.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(tutorials, HttpStatus.OK);
 
     }
 

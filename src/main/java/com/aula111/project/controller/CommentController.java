@@ -61,8 +61,17 @@ public class CommentController {
         }
 
         commentRepository.deleteByTutorialId(tutorialId);
-        
+
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<HttpStatus> deleteComment(@PathVariable("id") Long id){
+
+        commentRepository.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
 }
